@@ -1,54 +1,33 @@
 <template>
-    <div>
-      <h2>Login</h2>
-      <form @submit.prevent="login">
-        <h6>Email</h6>
-        <input v-model="email" type="email" required />
-        <h6>Password</h6>
-        <input v-model="password" type="password" required />
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  import axios from 'axios';
-  
-  export default {
-    data() {
-      return {
-        email: '',
-        password: ''
-      };
-    },
-    methods: {
-      async login() {
-        try {
-          const response = await axios.post('http://localhost:5000/api/auth/login', {
-            email: this.email,
-            password: this.password
-          });
-          console.log(response.data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    }
-  };
-  </script>
-  
-  <style scoped>
-h2 {
-  font-size: xx-large;
-  background: linear-gradient(135deg, rgb(198, 242, 255), rgb(134, 172, 255));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+  <div>
+    <h1>Login</h1>
+    <form @submit.prevent="login">
+      <input type="text" v-model="username" placeholder="Username" required />
+      <input type="password" v-model="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <router-link to="/register">Register here</router-link></p>
+  </div>
+</template>
 
-form {
-  display:flex;
-  align-self: center;
-  flex-direction: column;
-}
-  </style>
+<script>
+export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
+  methods: {
+    login() {
+      // Replace this with your actual login logic
+      if (this.username === 'user' && this.password === 'password') {
+        localStorage.setItem('authToken', 'your-auth-token');
+        this.$router.push('/home');
+      } else {
+        alert('Invalid credentials');
+      }
+    },
+  },
+};
+</script>
